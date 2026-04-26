@@ -20,13 +20,13 @@ Recognise these natural-language patterns and route accordingly.
 
 | Operator says | Action |
 |---|---|
-| "run intake", "set me up", "I want to start" | Read `/00-intake/`. Run the sparring intake. Bootstrap `/workspace/` from `/01-foundation/` templates. Run capability sync mode 1 silently. |
-| "design my artefact", "run the artefact skill" | Read `/03-execution/artefact/`. Read `/workspace/foundation/`. Output to `/workspace/execution/artefact/`. |
-| "run the teardown", "competitor analysis" | Read `/03-execution/teardown/`. Same input/output pattern. |
-| "draft a proposal", "post-discovery doc" | Read `/03-execution/proposal/`. Same pattern. |
-| "write the handoff", "brief the solutions team" | Read `/03-execution/handoff/`. Same pattern. |
-| "nurture sequence", "post-proposal emails" | Read `/03-execution/nurture/`. Same pattern. |
-| "what's new", "any platform updates" | Run capability sync mode 2 from `/capability-sync/`. |
+| "run intake", "set me up", "I want to start" | Read `/00-intake/intake.md` in full and follow it. The intake orchestrates voice calibration, capability sync mode 1, file ingestion, online research, interactive intake (using `/00-intake/questionnaire.md` and `/00-intake/sparring-rules.md`), coherence check, and writes to `/workspace/foundation/` using `/01-foundation/` templates. |
+| "design my artefact", "run the artefact skill" | Read `/03-execution/artefact/`. Read `/workspace/foundation/` and `/workspace/research/capability-snapshot.md`. Output to `/workspace/execution/artefact/`. (Skill body pending Build 2.) |
+| "run the teardown", "competitor analysis" | Read `/03-execution/teardown/`. Same input/output pattern. (Pending Build 2.) |
+| "draft a proposal", "post-discovery doc" | Read `/03-execution/proposal/`. Same pattern. (Pending Build 2.) |
+| "write the handoff", "brief the solutions team" | Read `/03-execution/handoff/`. Same pattern. (Pending Build 2.) |
+| "nurture sequence", "post-proposal emails" | Read `/03-execution/nurture/`. Same pattern. (Pending Build 2.) |
+| "what's new", "any platform updates" | Run capability sync mode 2 from `/capability-sync/mode-2-resync.md`. |
 | "alg upgrade" | Tell the operator to run `./alg-upgrade` from terminal. |
 
 ## Voice rules
@@ -41,4 +41,9 @@ The intake refuses weak inputs. Apply the same quality bar to inferred content f
 
 ## Status
 
-This repo implements the spec in `foundation.md` (v0.4). Pre-build. Builds run sequentially: sparring layer (`/00-intake/`), then five canonical skills, then tool-agnostic layer plus self-serve readiness. Until each build clears its validation rubric, operator commands above will return placeholder output or "not yet built" for unbuilt parts.
+This repo implements the spec in `foundation.md` (v0.4).
+
+- **Build 1 (sparring layer + foundation templates + capability sync v1):** v0.1 complete. The `run intake` command is fully wired and produces foundation files. Refinement pending real-operator usage.
+- **Build 2 (five canonical execution skills):** not started. Skill commands above return "not yet built."
+- **Build 3 (tool-agnostic layer, recommendation engine, self-serve readiness):** not started.
+- **alg-upgrade:** stub. Manual `git pull` works for now.
