@@ -1,0 +1,15 @@
+# Operator content. Never commit to canonical repo.
+/workspace/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Per-operator Claude Desktop / Code project state
+.claude/

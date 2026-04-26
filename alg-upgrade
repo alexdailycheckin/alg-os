@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# ALG OS upgrade command.
+# Pulls the latest canonical framework changes and overwrites framework files.
+# Never touches /workspace/.
+#
+# Status: stub. Implementation lands in Build 3 once framework files are stable.
+#
+# Contract:
+#   1. Fetch latest from canonical remote.
+#   2. Overwrite framework directories at the repo root.
+#   3. Leave /workspace/ untouched.
+#   4. Update version metadata.
+#   5. Print summary of what changed and any operator action required.
+
+set -euo pipefail
+
+echo "alg-upgrade is not yet implemented. Ships with Build 3."
+echo "Until then, manual git pull from the canonical remote works (review diffs first)."
+exit 0
