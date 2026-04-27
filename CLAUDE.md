@@ -1,6 +1,12 @@
 # ALG OS - Orchestrator
 
-This file tells Claude how to behave when an operator opens this repo in Claude Desktop or Claude Code. The full brief lives in `foundation.md`.
+**READ THIS FILE BEFORE RESPONDING TO ANY OPERATOR MESSAGE.**
+
+This is the routing layer for the ALG OS framework. Operator commands MUST be routed via the table in the "Operator commands" section below. **Do not respond with generic clarifying questions to messages that match a routing pattern.** Do not freelance content (slide decks, one-pagers, generic copy) when the operator is asking for an ALG OS skill output. The framework defines the work; this file routes the request.
+
+If you cannot determine which skill applies, ask "Which skill are you trying to run?" and list the available commands. Do not default to generic-assistant behaviour.
+
+The full brief lives in `foundation.md`.
 
 ## What ALG OS is
 
@@ -16,18 +22,26 @@ The repo splits into two halves.
 
 ## Operator commands
 
-Recognise these natural-language patterns and route accordingly.
+Match the operator's message against the patterns below. Be permissive: tolerate British and American spelling variants ("artefact"/"artifact"), synonyms (design/build/create/make/produce/generate), and natural paraphrasing. If the operator's message contains a recognised noun (intake / artefact / teardown / proposal / handoff / nurture) plus any verb implying action, route to the matching skill. Do NOT ask generic clarifying questions about format, audience, or content. Those questions live inside the skill flows.
 
-| Operator says | Action |
+| Operator triggers (any of) | Action |
 |---|---|
-| "run intake", "set me up", "I want to start" | Read `/00-intake/intake.md` in full and follow it. The intake orchestrates voice calibration, capability sync mode 1, file ingestion, online research, interactive intake (using `/00-intake/questionnaire.md` and `/00-intake/sparring-rules.md`), coherence check, and writes to `/workspace/foundation/` using `/01-foundation/` templates. |
-| "design my artefact", "run the artefact skill" | Read `/03-execution/artefact/skill.md` in full and follow it. Five-phase flow: fit diagnostic, three candidates, operator picks one, full spec, quality checklist, hand-off. Reads from `/workspace/foundation/` and `/workspace/research/capability-snapshot.md`. Writes to `/workspace/execution/artefact/`. |
-| "run the teardown", "competitor analysis" | Read `/03-execution/teardown/`. Same input/output pattern. (Pending Build 2.) |
-| "draft a proposal", "post-discovery doc" | Read `/03-execution/proposal/`. Same pattern. (Pending Build 2.) |
-| "write the handoff", "brief the solutions team" | Read `/03-execution/handoff/`. Same pattern. (Pending Build 2.) |
-| "nurture sequence", "post-proposal emails" | Read `/03-execution/nurture/`. Same pattern. (Pending Build 2.) |
-| "what's new", "any platform updates" | Run capability sync mode 2 from `/capability-sync/mode-2-resync.md`. |
-| "alg upgrade" | Tell the operator to run `./alg-upgrade` from terminal. |
+| "run intake", "set me up", "I want to start", "start me up", "set up my foundation", "onboard me" | Read `/00-intake/intake.md` in full and follow it. The intake orchestrates voice calibration, capability sync mode 1, file ingestion, online research, interactive intake (using `/00-intake/questionnaire.md` and `/00-intake/sparring-rules.md`), coherence check, and writes to `/workspace/foundation/` using `/01-foundation/` templates. |
+| Any message containing "artefact" or "artifact" plus a verb (design, build, create, make, develop, produce, generate, run, work on, help with) | Read `/03-execution/artefact/skill.md` in full and follow it. Five-phase flow: fit diagnostic, three candidates, operator picks one, full spec, quality checklist, hand-off. Reads from `/workspace/foundation/` and `/workspace/research/capability-snapshot.md`. Writes to `/workspace/execution/artefact/`. **Do not ask the operator what format the artefact is or who the audience is. Those are inside the skill flow.** |
+| "run the teardown", "competitor analysis", "tear down a competitor", "competitor positioning" | Read `/03-execution/teardown/`. Same input/output pattern. (Pending Build 2 v0.2.) |
+| "draft a proposal", "post-discovery doc", "write a proposal", "client proposal", "proposal for <client>" | Read `/03-execution/proposal/`. Same pattern. (Pending Build 2 v0.2.) |
+| "write the handoff", "brief the solutions team", "handoff doc", "solutions team brief" | Read `/03-execution/handoff/`. Same pattern. (Pending Build 2 v0.2.) |
+| "nurture sequence", "post-proposal emails", "follow-up sequence", "reactivate this prospect" | Read `/03-execution/nurture/`. Same pattern. (Pending Build 2 v0.2.) |
+| "what's new", "any platform updates", "capability sync", "what changed since last time" | Run capability sync mode 2 from `/capability-sync/mode-2-resync.md`. |
+| "alg upgrade", "upgrade the framework", "pull the latest" | Tell the operator to run `./alg-upgrade` from terminal. |
+
+## Routing rules
+
+1. Always check the operator's message against the table above BEFORE generating any response. Routing is the first thing you do.
+2. If a message matches multiple patterns, ask the operator which skill they meant. Do not silently pick one.
+3. If a message does not match any pattern, ask "Which skill are you trying to run? Available skills: intake, artefact, teardown (pending), proposal (pending), handoff (pending), nurture (pending), capability sync." Do not default to generic-assistant behaviour.
+4. Once routed, READ THE SKILL FILE IN FULL before producing any output. Skill files contain the complete flow; do not improvise around them.
+5. Never offer features that are not in the framework spec. If the operator asks for something out of scope (scheduled background runs, external integrations not in the agent taxonomy, capabilities not in the current build status above), say so and stop. Do not freelance v2 features as if they exist in v1.
 
 ## Voice rules
 
