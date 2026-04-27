@@ -27,6 +27,20 @@ All notable changes to ALG OS. Format follows Keep a Changelog. Project uses sem
   - `/03-execution/artefact/templates/spec.md` (output template the skill writes per artefact).
   - `RUNNING.md` (operator quickstart with permission-prompt guidance).
   - `CLAUDE.md` updated to route the artefact skill into the new files and to reflect Build 2 v0.1 status.
+- **Build 2 v0.2 (three more canonical skills + structural reframe):**
+  - `/03-execution/teardown/skill.md` (eight-phase competitor and positioning analysis).
+  - `/03-execution/proposal/skill.md` (five-phase post-discovery client document).
+  - `/03-execution/nurture/skill.md` (four-phase post-proposal email sequence with stall diagnosis).
+  - Per-skill READMEs updated to Build 2 v0.2 status.
+  - **Handoff dropped from canonical floor.** Operator testing showed handoff is situational (solo operators or motion types without a delivery team get no value). Demoted to operator-extension example. `/03-execution/handoff/` directory removed from the repo. Operators with delivery teams write their own in `/workspace/execution/handoff/`. The canonical floor is now four, not five.
+  - `foundation.md` updated to reflect four canonical skills (sections 5.3, 11, 12.2, 16, 17).
+  - **Build 3 reframed.** The original Build 3 spec was "tool-agnostic mode selector + recommendation engine + self-serve readiness." That scope is now subsumed inside a new spec: "build my agents," a meta-agent that ingests foundation + artefact spec + capability snapshot and produces working agent definitions, MCP connections, and scheduled triggers so the operator's motion runs autonomously. Detailed Build 3 spec lands in a separate session. `foundation.md` section 12.3 updated with the placeholder rubric.
+  - `CLAUDE.md` updated to drop handoff routing and reflect Build 2 v0.2 status.
+
+### Coming next
+- Build 2 v0.3: artefact skill gains edition-1 production capability (the spec is decoration if the operator cannot also produce edition 1 from their data).
+- Build 3 v0.1: meta-agent spec and v1 implementation.
+- Build 1 patch queue items 1, 2, 3, 4 still open (terminal-language file ingestion, progress markers, task list sync, RUNNING.md gaps). Item 5 closed by CLAUDE.md routing patch in `dd76150`. Item 6 (memory-saving) deferred to Build 3.
 
 ### Build 1 v0.1 patch queue (carried into Build 2 v0.2)
 - "Drop in" file ingestion language is GUI-speak. Replace with terminal-appropriate.

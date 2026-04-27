@@ -123,17 +123,18 @@ This layer also houses the agent taxonomy (see section 9).
 
 ### 5.3 Layer 3 - Execution
 
-The five canonical skills, shipped with the repo.
+The four canonical skills, shipped with the repo.
 
 The Artefact (signature artefact generator).
 The Teardown (competitor and positioning analysis).
 The Proposal (post-discovery client document).
-The Handoff (internal solutions team brief).
 The Nurture (post-proposal email sequence).
 
 Every skill reads Layer 1, optionally pulls from Layer 2, produces output that matches voice and format. Every skill enforces a quality checklist before completion.
 
-Operators extend this layer with their own skills. The intake asks what additional skills the operator wants based on their motion type (e.g. a PLG-led SaaS operator may need an Onboarding skill rather than a Handoff skill). The five canonical skills are the floor, not the ceiling.
+Operators extend this layer with their own skills. The intake asks what additional skills the operator wants based on their motion type (e.g. a PLG-led SaaS operator may need an Onboarding skill, an operator with a delivery team may need a Handoff skill). The four canonical skills are the floor, not the ceiling.
+
+An earlier draft listed five canonical skills including a Handoff (internal solutions team brief). Operator testing surfaced that handoff is situational, not universal. Solo operators and motion types without a delivery team get no value from it. Handoff was demoted to an operator-extension example. Operators with delivery teams write their own handoff skill in `/workspace/execution/handoff/`.
 
 ### 5.4 Layer 4 - Feedback and Iteration
 
@@ -333,11 +334,10 @@ The repo splits cleanly into framework and workspace. Framework directories ship
                              includes voice.md template (English variant defaults + voice rules)
   /02-research               MCP config, data source schemas, intel templates
                              agent-taxonomy.md (the catalogue the recommender reads from)
-  /03-execution              the five canonical skills
+  /03-execution              the four canonical skills
     /artefact                signature artefact generator
     /teardown                competitor and positioning analysis
     /proposal                post-discovery client document
-    /handoff                 internal solutions team brief
     /nurture                 post-proposal email sequence
   /04-feedback               metrics, cadence, review templates
   /capability-sync           Anthropic, MCP, internal changelog reader
@@ -384,7 +384,7 @@ If 5 of 5 pass, Build 2 begins. If fewer, see section 14.
 
 ### 12.2 Build 2 (Days 31 to 60) - The Five Execution Skills
 
-Build the five canonical skills as universal templates. Artefact, Teardown, Proposal, Handoff, Nurture.
+Build the four canonical skills as universal templates. Artefact, Teardown, Proposal, Nurture.
 
 Each skill reads from Layer 1 (the foundation produced by Build 1). Each skill is vertical-agnostic in its template, vertical-specific in its output.
 
@@ -398,19 +398,35 @@ The Artefact skill is the most demanding. It must produce a defensible artefact 
 4. Each skill enforces voice rules (English variant, banned words, paragraph length) without operator manual checking.
 5. Skills produce vertical-specific output, not template language with the company name swapped in.
 
-### 12.3 Build 3 (Days 61 to 90) - Tool-Agnostic Layer and Self-Serve Readiness
+### 12.3 Build 3 (Days 61 to 90) - Build My Agents (the meta-agent)
 
-Build the product-recursive vs tool-agnostic mode selector. Build the recommendation engine for tools (best-in-class per agent, with rationale). The recommendation engine reads from `/02-research/agent-taxonomy.md`.
+**Note: this section was reframed during Build 2 v0.2 testing. Earlier draft scoped Build 3 as "tool-agnostic mode selector + recommendation engine + self-serve readiness." That scope is now subsumed inside the meta-agent below. The reframed scope is described here; the detailed implementation spec lands in a separate Build 3 spec doc when Build 3 work begins.**
 
-The framework must be ready for an operator to fork the repo and run it end to end without contact with the builder. Documentation, error handling, and onboarding paths are in scope for this build.
+Build a meta-agent that constructs the operator's running agent stack. The operator gives ALG OS three things (foundation, signature artefact spec, capability snapshot) and the meta-agent produces working agent definitions, MCP connections, and scheduled triggers so the operator's motion runs autonomously rather than requiring manual skill invocation.
 
-**Build 3 validation rubric:**
+The meta-agent reads:
 
-1. Mode selector correctly identifies product-recursive vs tool-agnostic given a foundation produced by Build 1.
-2. Tool recommendations include 3+ named options per agent category in tool-agnostic mode.
-3. The framework is self-serve end to end: an operator can fork, run intake, produce a foundation, run skills, and ship a signature artefact without any synchronous support.
-4. Documentation covers the full operator path (fork to first artefact) and is testable by someone outside the project.
-5. No critical bugs in the canonical flow (intake to artefact) when run against a fresh fork.
+1. The operator's foundation files in `/workspace/foundation/`.
+2. The signature artefact spec in `/workspace/execution/artefact/<slug>-spec.md`.
+3. The capability snapshot in `/workspace/research/capability-snapshot.md`.
+4. The agent taxonomy in `/02-research/agent-taxonomy.md`.
+
+The meta-agent produces:
+
+- Working agent definitions in `/workspace/agents/` that execute the four canonical skills on triggers (proposal sent and no reply, mystery shop quarter rolling over, new prospect added to pipeline, etc.).
+- MCP connection blueprints the operator approves and connects.
+- Scheduled triggers (cron-like) for production cycles (artefact edition production, capability sync mode 2, etc.).
+- A handoff to the operator: "your motion now runs. Review outputs in /workspace/execution/ before sending."
+
+Mode selection (product-recursive vs tool-agnostic) and tool recommendations are now first-pass decisions inside the meta-agent's planning step rather than separate skills.
+
+**Build 3 validation rubric (placeholder pending the dedicated spec):**
+
+1. Meta-agent ingests the three input sources and produces a working agent stack definition.
+2. Mode selection (product-recursive vs tool-agnostic) is decided and documented inside the agent stack.
+3. The agent stack is self-serve end to end: an operator can run it without synchronous human support.
+4. Documentation covers the full operator path (fork to running motion).
+5. No critical bugs in the canonical flow (intake to running motion) when run against a fresh fork.
 
 Capability sync evolution beyond v1 (scheduled background pulls, automated taxonomy updates), GitHub Actions automation, multi-tenancy SaaS, and public marketing release all stay out of scope until after day 90.
 
@@ -482,13 +498,13 @@ ALG OS could be MIT-licensed and freely forkable, or it could be a paid framewor
 
 ## 16. Known Traps
 
-The temptation to ship more than five canonical skills. Operators extend with their own, but the canonical floor stays at five. Every additional canonical skill defends its place against the cut-90% discipline.
+The temptation to ship more than four canonical skills. Operators extend with their own, but the canonical floor stays at four. Every additional canonical skill defends its place against the cut-90% discipline.
 
 The temptation to over-engineer the sparring layer. The intake refuses weak inputs but every question must be load-bearing. A 200-question intake is fine if every question moves the foundation. A 30-question intake is bad if half of them are bureaucratic. Quality bar, not gate-keeping for its own sake.
 
 The temptation to skip building the universal version and just ship one operator's instance. The whole point of ALG OS is to work across operators. If it only works for the operator who built it, it's a personal toolkit, not a product.
 
-The temptation to let the framework grow more complex than the outreach machines it produces. The sparring intake, the five canonical skills, the agent taxonomy, and the recommendation engine are the whole product surface for v1. Anything else justifies itself or gets cut.
+The temptation to let the framework grow more complex than the outreach machines it produces. The sparring intake, the four canonical skills, the agent taxonomy, and the meta-agent (Build 3) are the whole product surface for v1. Anything else justifies itself or gets cut.
 
 The temptation to recommend specific vendors (including any company Alexandru is associated with) inside the public ALG. Recommendations are tier-based and show multiple options. ALG isn't a kingmaker.
 
@@ -512,7 +528,7 @@ The temptation to confuse scope failure with use case failure when a build phase
 
 7. Build the `/03-execution/artefact` skill third (the Signature Artefact Generator). This is the most demanding skill and the one that proves the framework works across verticals.
 
-8. The remaining four canonical skills (Teardown, Proposal, Handoff, Nurture) come after the Artefact skill in Build 2.
+8. The remaining three canonical skills (Teardown, Proposal, Nurture) come after the Artefact skill in Build 2.
 
 9. Stop and check in with Alexandru after each of the three Build phases (day 30, day 60, day 90). Don't ship Build 2 features before Build 1 is validated against the rubric in section 12.1.
 
