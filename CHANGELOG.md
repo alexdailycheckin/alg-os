@@ -19,9 +19,25 @@ All notable changes to ALG OS. Format follows Keep a Changelog. Project uses sem
   - `/capability-sync/sources.md` (canonical source list).
   - `CLAUDE.md` updated to route operator commands into the new files.
   - Per-directory READMEs updated to reflect Build 1 v0.1 status.
+- **Build 2 v0.1 (agent taxonomy + artefact skill):**
+  - `/02-research/agent-taxonomy.md` (10 categories, four tiers per category, vendor-neutral named alternatives).
+  - `/03-execution/artefact/skill.md` (five-phase orchestrator: fit diagnostic, three candidates, operator picks, full spec, hand-off).
+  - `/03-execution/artefact/diagnostic.md` (four diagnostic questions, five patterns A to E, scoring matrix).
+  - `/03-execution/artefact/quality-checklist.md` (12-item bar with documented exception logic, max 2 exceptions per spec).
+  - `/03-execution/artefact/templates/spec.md` (output template the skill writes per artefact).
+  - `RUNNING.md` (operator quickstart with permission-prompt guidance).
+  - `CLAUDE.md` updated to route the artefact skill into the new files and to reflect Build 2 v0.1 status.
+
+### Build 1 v0.1 patch queue (carried into Build 2 v0.2)
+- "Drop in" file ingestion language is GUI-speak. Replace with terminal-appropriate.
+- No progress markers during long operations. Add explicit progress lines.
+- Task list display lags real phase transitions. Instruct Claude to update todos immediately on phase transition.
+- `RUNNING.md` needs file-attachment-in-Claude-Code section and per-domain web_fetch prompt section.
+- Orchestrator should refuse to offer features outside the current build status (Claude offered `/schedule` mode 2 which v1 explicitly excludes).
+- Memory-saving behaviour fired but was not designed in. Decide whether to spec it or block it.
 
 ### Status
-- Build 1 v0.1 complete and testable end-to-end. Build 2 (five canonical execution skills) starts next.
+- Build 2 v0.1 complete: agent taxonomy and artefact skill shipped. Build 2 v0.2 (teardown, proposal, handoff, nurture) is next.
 
 ## [v0.4] - 2026-04-26 - Foundation
 

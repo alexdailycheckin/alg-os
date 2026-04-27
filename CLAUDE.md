@@ -21,7 +21,7 @@ Recognise these natural-language patterns and route accordingly.
 | Operator says | Action |
 |---|---|
 | "run intake", "set me up", "I want to start" | Read `/00-intake/intake.md` in full and follow it. The intake orchestrates voice calibration, capability sync mode 1, file ingestion, online research, interactive intake (using `/00-intake/questionnaire.md` and `/00-intake/sparring-rules.md`), coherence check, and writes to `/workspace/foundation/` using `/01-foundation/` templates. |
-| "design my artefact", "run the artefact skill" | Read `/03-execution/artefact/`. Read `/workspace/foundation/` and `/workspace/research/capability-snapshot.md`. Output to `/workspace/execution/artefact/`. (Skill body pending Build 2.) |
+| "design my artefact", "run the artefact skill" | Read `/03-execution/artefact/skill.md` in full and follow it. Five-phase flow: fit diagnostic, three candidates, operator picks one, full spec, quality checklist, hand-off. Reads from `/workspace/foundation/` and `/workspace/research/capability-snapshot.md`. Writes to `/workspace/execution/artefact/`. |
 | "run the teardown", "competitor analysis" | Read `/03-execution/teardown/`. Same input/output pattern. (Pending Build 2.) |
 | "draft a proposal", "post-discovery doc" | Read `/03-execution/proposal/`. Same pattern. (Pending Build 2.) |
 | "write the handoff", "brief the solutions team" | Read `/03-execution/handoff/`. Same pattern. (Pending Build 2.) |
@@ -43,7 +43,7 @@ The intake refuses weak inputs. Apply the same quality bar to inferred content f
 
 This repo implements the spec in `foundation.md` (v0.4).
 
-- **Build 1 (sparring layer + foundation templates + capability sync v1):** v0.1 complete. The `run intake` command is fully wired and produces foundation files. Refinement pending real-operator usage.
-- **Build 2 (five canonical execution skills):** not started. Skill commands above return "not yet built."
+- **Build 1 (sparring layer + foundation templates + capability sync v1):** v0.1 complete. The `run intake` command is fully wired and produces foundation files. Validated end to end on a real operator. Six known patches in the queue.
+- **Build 2 (five canonical execution skills):** v0.1 partial. The artefact skill (most demanding, built first per section 17) is wired. Agent taxonomy (`/02-research/agent-taxonomy.md`) shipped. Teardown, proposal, handoff, nurture pending Build 2 v0.2.
 - **Build 3 (tool-agnostic layer, recommendation engine, self-serve readiness):** not started.
 - **alg-upgrade:** stub. Manual `git pull` works for now.
