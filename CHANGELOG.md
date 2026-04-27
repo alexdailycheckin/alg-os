@@ -47,9 +47,28 @@ All notable changes to ALG OS. Format follows Keep a Changelog. Project uses sem
   - Distribution-ready formats per spec channel (web post, press release, LinkedIn personal, LinkedIn company, newsletter, X thread, partner template). Skip channels not in the spec; do not invent paths.
   - Methodology and data snapshot mandatory. Honest about limitations. Reproducible by future editions or audits.
 
+- **Build 3 v0.1 (build my agents - the meta-agent):**
+  - `/03-execution/build-my-agents/skill.md` (seven-phase orchestrator: map funnel to canonical skills, define each agent, MCP blueprint, schedule, stack overview, quality checklist, hand-off).
+  - `/03-execution/build-my-agents/quality-checklist.md` (12-item bar with documented exception logic, max 2 exceptions).
+  - `/03-execution/build-my-agents/templates/agent-definition.md` (per-agent definition template: trigger, owner, mode, inputs, skill invocation, outputs, review logic, run history, health).
+  - `/03-execution/build-my-agents/templates/agent-stack.md` (operator-stack overview template: system-map narrative, funnel-step diagram, agent list, dependencies, review responsibilities, health metrics).
+  - `/03-execution/build-my-agents/templates/mcp-blueprint.md` (MCP connection blueprint template: already-connected, required, recommended, not-yet-supported).
+  - `/03-execution/build-my-agents/templates/schedule.md` (schedule template: manual default, optional cron/launchd, v0.2 placeholder).
+  - `/03-execution/build-my-agents/README.md` (overview, status, what v0.1 is honest about, what v0.2 and v0.3 will add).
+  - `CLAUDE.md` updated with new operator commands ("build my agents", "run the <agent name> agent") and Build 3 v0.1 status.
+  - `/workspace/agents/` becomes a recognised workspace directory (joins `/workspace/foundation/`, `/workspace/research/`, `/workspace/execution/`, `/workspace/feedback/`).
+
+### Honest scope flags for Build 3 v0.1
+
+- v0.1 ships documentation and definitions, not autonomous infrastructure. The operator runs each agent manually via Claude Code on the schedule the framework defines. v0.2 ships hosted scheduling.
+- v0.1 has no auto-test for MCP connections. Operators run each agent manually once to verify connections work.
+- v0.1 has no agent observability. Run history is operator-maintained inside each agent definition.
+- v0.1 has no operator-facing dashboard. The agent-stack.md document is the system map the operator reads.
+
 ### Coming next
-- Build 3 v0.1: meta-agent ("build my agents"). Ingests foundation + artefact spec + capability snapshot. Produces working agent definitions, MCP connections, and scheduled triggers so the operator's motion runs autonomously rather than requiring manual skill invocation.
-- Build 1 patch queue items 1, 2, 3, 4 still open (terminal-language file ingestion, progress markers, task list sync, RUNNING.md gaps). Item 5 closed by CLAUDE.md routing patch in `dd76150`. Item 6 (memory-saving) deferred to Build 3.
+- Build 3 v0.2: hosted scheduling. Agent observability. Agent extension framework (operators write their own agents in `/workspace/agents/custom/`). Connection auto-test.
+- Build 3 v0.3: operator-facing dashboard. Capability sync auto-suggests stack updates on material platform deltas. Agent A/B framework.
+- Build 1 patch queue items 1, 2, 3, 4 still open (terminal-language file ingestion, progress markers, task list sync, RUNNING.md gaps). Item 5 closed in `dd76150`. Item 6 (memory-saving) reframed: the meta-agent's run-history pattern handles a similar concern by giving each agent an operator-maintained log.
 
 ### Build 1 v0.1 patch queue (carried into Build 2 v0.2)
 - "Drop in" file ingestion language is GUI-speak. Replace with terminal-appropriate.
