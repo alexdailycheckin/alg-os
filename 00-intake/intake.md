@@ -43,9 +43,9 @@ The operator does not see a release log. They see a framework that knows what is
 
 Ask the operator:
 
-> "Drop in any existing brand, ICP, positioning, sales, or strategy documents you have. PDFs, Word, PowerPoint, markdown, plain text, CSV are accepted. If you have nothing, say so and we move on. Existing artefacts are more authoritative than recall, so we go through them first."
+> "If you have existing brand, ICP, positioning, sales, or strategy documents, point me at them. Three ways: drag the file from Finder onto this terminal window (the path will paste in), paste the absolute path directly, or reference with `@path/to/file`. PDFs, Word, PowerPoint, markdown, plain text, and CSV are accepted. If you have nothing, say so and we move on. Existing artefacts are more authoritative than recall, so we go through them first."
 
-For each file uploaded, parse it and extract structured signal toward the foundation files. Hold the extracted content in working memory. Do not write to `/workspace/foundation/` yet. Reflect back what you understood and ask the operator to confirm or correct before moving on.
+For each file referenced, parse it and extract structured signal toward the foundation files. Emit a short progress line per file ("Reading <filename>, extracting brand and ICP signals..."). Hold the extracted content in working memory. Do not write to `/workspace/foundation/` yet. Reflect back what you understood and ask the operator to confirm or correct before moving on.
 
 ### Phase 3 - Online research
 

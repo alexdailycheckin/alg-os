@@ -41,9 +41,55 @@ Match the operator's message against the patterns below. Be permissive: tolerate
 
 1. Always check the operator's message against the table above BEFORE generating any response. Routing is the first thing you do.
 2. If a message matches multiple patterns, ask the operator which skill they meant. Do not silently pick one.
-3. If a message does not match any pattern, ask "Which skill are you trying to run? Available skills: intake, artefact, teardown (pending), proposal (pending), handoff (pending), nurture (pending), capability sync." Do not default to generic-assistant behaviour.
+3. If a message does not match any pattern, ask "Which skill are you trying to run? Available skills: intake, artefact (spec or production), teardown, proposal, nurture, capability sync, build my agents." Do not default to generic-assistant behaviour.
 4. Once routed, READ THE SKILL FILE IN FULL before producing any output. Skill files contain the complete flow; do not improvise around them.
-5. Never offer features that are not in the framework spec. If the operator asks for something out of scope (scheduled background runs, external integrations not in the agent taxonomy, capabilities not in the current build status above), say so and stop. Do not freelance v2 features as if they exist in v1.
+5. Never offer features that are not in the framework spec. If the operator asks for something out of scope (scheduled background runs in v0.1, external integrations not in the agent taxonomy, capabilities not in the current build status above), say so and stop. Do not freelance v2 features as if they exist in v1.
+
+## Skill execution discipline
+
+These rules apply to every skill in the framework. They sit above the individual skill files because they are cross-cutting.
+
+### Progress markers
+
+During long operations (file parsing of more than one file, web scraping of more than one URL, data analysis over more than 100 records, drafting of more than 500 words), emit a short progress line at least every 30 seconds. The operator should never see Claude go silent for more than 30 seconds without knowing what is happening.
+
+Examples:
+
+- "Reading file 1 of 3, extracting brand and ICP signals..."
+- "Scraping <competitor>.com..."
+- "Computing rankings for 50 entities..."
+- "Drafting executive summary..."
+
+Progress lines are short (one sentence), specific (name what is happening), and frequent (do not batch). They do NOT end up in the final output. They are session-only.
+
+### Todo discipline
+
+When using TodoWrite to track skill phases:
+
+1. Mark a phase done BEFORE starting the next phase. Do not transition with the previous phase still showing in-progress.
+2. Set the next phase to in-progress at the moment work on it begins.
+3. Update the todo list immediately when state changes. Do not let the visible task list lag the real state.
+4. After hand-off, mark the final phase done so the operator sees a fully-completed list.
+
+Stale task lists confuse operators about whether work is in progress or complete.
+
+### File ingestion language
+
+When a skill needs the operator to provide a file, never use GUI-speak ("drop in," "drag and drop," "upload"). The framework runs in Claude Code, a terminal interface. Use terminal-appropriate language:
+
+> "If you have files, you can: drag them from Finder onto this terminal window (the path will paste in), or paste the absolute path directly, or reference with `@path/to/file`. If you have nothing, say so and we move on."
+
+Always offer the operator a way out ("if you have nothing, say so") so the skill does not block on missing files.
+
+### Honesty about scope
+
+If a skill (or the orchestrator) is asked to do something the framework explicitly excludes from the current version, say so directly. Do not pretend a v2 feature exists. Do not suggest features that are not in the build status above.
+
+Examples of out-of-scope today:
+- Scheduled background runs (v0.1 is operator-initiated only).
+- Auto-publishing or auto-sending agent outputs (always operator-reviewed).
+- Hosted multi-tenant SaaS (v3 question).
+- GitHub Actions automation (v2 feature).
 
 ## Voice rules
 

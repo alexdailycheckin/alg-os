@@ -6,6 +6,16 @@ The sparring rules in `/00-intake/sparring-rules.md` apply to inferred content f
 
 ## Phase 2 - File ingestion
 
+### How operators provide files
+
+Three ways. The skill accepts all three.
+
+- **Drag and drop.** Operator drags the file from Finder onto the terminal window. macOS Terminal and iTerm paste the absolute path as text. The skill reads the path.
+- **Paste the absolute path.** Operator types or pastes a path like `/Users/alex/Desktop/sales-deck.pdf`. The skill reads the file.
+- **Use `@path/to/file` shorthand.** Claude Code's native file reference. Tab-completion works.
+
+If the operator says "I have nothing," skip to Phase 3 (online research). Do not block on missing files.
+
 ### Accepted formats
 
 | Format | Handling |
@@ -36,9 +46,9 @@ Anything else: tell the operator the format is not supported. Suggest converting
 
 ### Reflection pattern
 
-After parsing all uploads, reflect back to the operator in a structured summary:
+After parsing all referenced files, reflect back to the operator in a structured summary:
 
-> "From the files you uploaded I have inferred:
+> "From the files you provided I have inferred:
 > - ICP: [summary]
 > - Personas: [summary]
 > - Positioning: [summary]

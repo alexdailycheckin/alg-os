@@ -65,10 +65,18 @@ All notable changes to ALG OS. Format follows Keep a Changelog. Project uses sem
 - v0.1 has no agent observability. Run history is operator-maintained inside each agent definition.
 - v0.1 has no operator-facing dashboard. The agent-stack.md document is the system map the operator reads.
 
+- **Build 1 patch queue closeout (items 1, 2, 3, 4):**
+  - **Item 1 closed** (terminal-language file ingestion). `/00-intake/intake.md` Phase 2 and `/00-intake/data-ingestion.md` Phase 2 now describe three terminal-appropriate ways to provide files (drag onto terminal, paste absolute path, `@path/to/file` shorthand). GUI-speak ("drop in") removed.
+  - **Item 2 closed** (progress markers). `CLAUDE.md` gains a "Skill execution discipline" section with cross-cutting rules: emit a short progress line at least every 30 seconds during long operations (file parsing, web scraping, analysis, drafting). Examples included. Applies to every skill, not patched per-skill.
+  - **Item 3 closed** (todo discipline). `CLAUDE.md` "Skill execution discipline" section adds rules: mark phase done before starting next, set next phase to in-progress when work begins, update todos immediately on state change, mark final phase done at hand-off so the operator sees a fully-completed list.
+  - **Item 4 closed** (RUNNING.md gaps). RUNNING.md gains: "Verify the orchestrator is loaded" section, expanded permission-prompt section (per-domain web_fetch, file-read-outside-repo), "Attaching files in Claude Code" section (drag, paste path, `@` shorthand), updated common-issues section with directory-of-launch reminder and stuck/freelancing diagnostics, current canonical skill list (no longer references the deprecated handoff).
+  - Item 5 (orchestrator freelancing) was already closed in `dd76150`.
+  - Item 6 (memory-saving) reframed: the meta-agent's per-agent run-history pattern handles a similar concern. No further action needed in v0.1.
+
 ### Coming next
 - Build 3 v0.2: hosted scheduling. Agent observability. Agent extension framework (operators write their own agents in `/workspace/agents/custom/`). Connection auto-test.
 - Build 3 v0.3: operator-facing dashboard. Capability sync auto-suggests stack updates on material platform deltas. Agent A/B framework.
-- Build 1 patch queue items 1, 2, 3, 4 still open (terminal-language file ingestion, progress markers, task list sync, RUNNING.md gaps). Item 5 closed in `dd76150`. Item 6 (memory-saving) reframed: the meta-agent's run-history pattern handles a similar concern by giving each agent an operator-maintained log.
+- Patch queue is empty going into v0.2.
 
 ### Build 1 v0.1 patch queue (carried into Build 2 v0.2)
 - "Drop in" file ingestion language is GUI-speak. Replace with terminal-appropriate.
