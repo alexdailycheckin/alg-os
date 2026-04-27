@@ -113,11 +113,22 @@ The spec includes everything from the candidate plus:
 
 Before declaring the spec complete, run the checklist in `/03-execution/artefact/quality-checklist.md`. If any item fails, surface it to the operator and fix before writing the spec to `/workspace/execution/artefact/`.
 
-### Phase 5 - Hand-off
+### Phase 5 - Spec hand-off and edition-1 branch
 
-Tell the operator what to do next:
+Tell the operator the spec is complete:
 
-> "Spec complete at `/workspace/execution/artefact/<slug>-spec.md`. Build 2's other skills produce the rest of the funnel: teardown for competitor positioning context, proposal for post-discovery client work, handoff for solutions-team briefs once you start landing engagements off this artefact. The artefact spec is the input to the recommendation engine in Build 3, which will recommend the agent stack to produce future editions on cadence."
+> "Spec complete at `/workspace/execution/artefact/<slug>-spec.md`. Two next steps:
+>
+> 1. **Produce edition 1 now.** If you have the data the spec describes, I can produce the first edition of the artefact in this same session. The output is review-ready (canonical markdown, methodology, distribution-ready formats per the spec's plan). You review and ship.
+> 2. **Stop here.** The spec is the deliverable. Run 'produce my artefact edition' later when you have the data ready.
+>
+> Which do you want?"
+
+If the operator says yes to edition 1, route to `/03-execution/artefact/production.md` and continue. The production skill picks up where this skill ended, reads the spec, asks for the data, and produces the edition.
+
+If the operator says no, hand-off as before:
+
+> "OK. The spec is the input to Build 3 (the meta-agent), which will eventually run production on cadence. For now, run 'produce my artefact edition' whenever you have the data ready."
 
 Do not auto-run other skills. Operator decides next.
 

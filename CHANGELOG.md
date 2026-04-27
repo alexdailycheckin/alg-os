@@ -37,9 +37,18 @@ All notable changes to ALG OS. Format follows Keep a Changelog. Project uses sem
   - **Build 3 reframed.** The original Build 3 spec was "tool-agnostic mode selector + recommendation engine + self-serve readiness." That scope is now subsumed inside a new spec: "build my agents," a meta-agent that ingests foundation + artefact spec + capability snapshot and produces working agent definitions, MCP connections, and scheduled triggers so the operator's motion runs autonomously. Detailed Build 3 spec lands in a separate session. `foundation.md` section 12.3 updated with the placeholder rubric.
   - `CLAUDE.md` updated to drop handoff routing and reflect Build 2 v0.2 status.
 
+- **Build 2 v0.3 (artefact production):**
+  - `/03-execution/artefact/production.md` (nine-phase production orchestrator: spec validation, data ingestion, analysis, drafting, voice and quality, distribution-ready formats, methodology, quality checklist, hand-off).
+  - `/03-execution/artefact/skill.md` Phase 5 updated to add edition-1 branch (after spec is written, operator can produce edition 1 in the same session or run production later).
+  - `/03-execution/artefact/README.md` updated to document spec + production modes.
+  - `CLAUDE.md` updated with new operator commands ("produce my artefact edition," "ship edition <N>," etc.) and refined matching for spec vs production routes.
+  - 10-item production-specific quality checklist with three-failure kill rule.
+  - Edition numbering: sequential, zero-padded (01, 02, 03 ...). Suffix conventions for multi-cadence operators (Q1-2026, annual-2026, special-<slug>).
+  - Distribution-ready formats per spec channel (web post, press release, LinkedIn personal, LinkedIn company, newsletter, X thread, partner template). Skip channels not in the spec; do not invent paths.
+  - Methodology and data snapshot mandatory. Honest about limitations. Reproducible by future editions or audits.
+
 ### Coming next
-- Build 2 v0.3: artefact skill gains edition-1 production capability (the spec is decoration if the operator cannot also produce edition 1 from their data).
-- Build 3 v0.1: meta-agent spec and v1 implementation.
+- Build 3 v0.1: meta-agent ("build my agents"). Ingests foundation + artefact spec + capability snapshot. Produces working agent definitions, MCP connections, and scheduled triggers so the operator's motion runs autonomously rather than requiring manual skill invocation.
 - Build 1 patch queue items 1, 2, 3, 4 still open (terminal-language file ingestion, progress markers, task list sync, RUNNING.md gaps). Item 5 closed by CLAUDE.md routing patch in `dd76150`. Item 6 (memory-saving) deferred to Build 3.
 
 ### Build 1 v0.1 patch queue (carried into Build 2 v0.2)
