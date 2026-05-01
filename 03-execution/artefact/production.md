@@ -13,12 +13,13 @@ Read in full before doing anything else.
 
 A complete artefact edition at `/workspace/execution/artefact/<slug>-edition-<NN>/` that includes:
 
-- `edition-<NN>.md` - the canonical markdown edition.
+- `edition-<NN>.md` - the canonical markdown edition (source content).
 - `methodology.md` - the data sources, sampling, calculation logic.
-- `distribution/` - ready-to-send formats per the spec's distribution plan (press release, LinkedIn post, newsletter, etc.).
+- `distribution/` - ready-to-send markdown source for each channel in the spec's distribution plan (press release, LinkedIn post, newsletter, etc.).
+- `published/` - rendered, publishable formats: brand-consistent HTML landing page, press-ready PDF, and 1200x627 social cards. The HTML is also copied to the operator's site directory at the path the spec defines.
 - `data/` - the underlying data the edition was produced from (snapshot, in case sources change later).
 
-The edition is operator-reviewed before publication. The skill produces, the operator approves and ships.
+The edition is operator-reviewed before publication. The skill produces and renders; the operator approves and ships.
 
 ## Inputs the skill reads
 
@@ -156,6 +157,52 @@ Read the spec's distribution plan. For each channel listed, produce the channel-
 | Partner amplification | Templated email or one-pager partners can forward | `partner-template.md` |
 
 Skip channels not listed in the spec. Do not invent distribution paths.
+
+### Phase 6.5 - Render to publishable formats
+
+Source markdown is not the deliverable. Press desks ask for a PDF, prospects need a citable URL, LinkedIn needs an image. Render the canonical edition into the three publishable formats every artefact ships with, saved alongside the source markdown.
+
+Default output structure:
+
+```
+/workspace/execution/artefact/<slug>-edition-<NN>/published/
+  index.html             # canonical landing page, brand-consistent, schema-marked
+  edition.pdf            # press-ready PDF, identical layout to the HTML
+  social/
+    headline.png         # 1200x627 LinkedIn share image, the headline finding
+    ranking.png          # 1200x627 named-entity ranking
+    pattern.png          # 1200x627 the cross-group pattern (or per-edition signature finding)
+```
+
+Plus a deployable copy of `index.html` at the operator's site directory under the path the spec defines (e.g. `<operator-site-repo>/<artefact-slug>/<edition-slug>/index.html`).
+
+**Rendering recipe (default tools, no operator handoff required):**
+
+1. **HTML page.** Match the operator's existing site brand stack (read the operator's site repo if available; otherwise read `/workspace/foundation/brand.md` for the colour and typography tokens). The page must include:
+   - Sticky nav matching the operator's site (read the existing nav include if one exists).
+   - Hero with title, pilot or anchor banner, and as-of metadata.
+   - Headline-numbers grid (5 to 6 stat cards, the most striking findings).
+   - Named-entity ranking with bar visuals.
+   - Per-entity findings cards.
+   - Methodology summary block with link to the full methodology.
+   - FAQ section with `FAQPage` JSON-LD schema.
+   - CTA section (primary CTA: the operator's offer follow-up, e.g., AIOS Command trial; secondary: methodology and right-of-reply).
+   - JSON-LD: `Organization`, `Report`, `BreadcrumbList`, `FAQPage`.
+   - OpenGraph and Twitter card metadata pointing to `social/headline.png`.
+   - Print stylesheet (`@media print`) so the same HTML renders cleanly to PDF.
+2. **PDF.** Render the HTML to PDF via headless Chrome. Do not maintain a separate PDF source; the print stylesheet inside `index.html` is the source of truth. Command pattern: `chrome --headless=new --no-pdf-header-footer --print-to-pdf=published/edition.pdf file:///path/to/index.html`. If headless Chrome is not available, fall back to `weasyprint` or `wkhtmltopdf`; document which one was used.
+3. **Social cards.** Generate three 1200x627 PNG images using the operator's brand colours and a system font (Inter if available; Helvetica or Arial Bold as fallback). Default content: (a) the single biggest headline number, (b) the named-entity ranking with bars, (c) the cross-group pattern or the most surprising single finding. Use Python with PIL (`Pillow`) to keep dependencies minimal.
+
+**Hard rules for the render phase:**
+
+- Same source content as the canonical edition. Numbers, language, and entity names must match `edition-<NN>.md` exactly.
+- Voice rules from `voice.md` apply to all rendered surfaces. Banned words, paragraph length, English variant.
+- Schema markup is mandatory on the HTML page. AEO ranks depend on it.
+- Brand consistency: read the operator's existing site nav and footer if present. Do not invent a new visual identity.
+- No invented data in the social cards. Every number on a card must trace to the canonical edition.
+- The PDF and the HTML must show the same layout. If they diverge, fix the print stylesheet rather than producing two parallel layouts.
+
+If any of these tools is unavailable in the environment, surface to the operator and stop. Do not produce a half-rendered set.
 
 ### Phase 7 - Methodology and data snapshot
 

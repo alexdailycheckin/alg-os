@@ -32,7 +32,7 @@ If the operator pushes for a faster cadence than the team can sustain, surface t
 
 ### 5. Distribution plan is specific
 
-The spec names where the artefact lives, how it gets seen, and who promotes it. "We will publish on our blog" fails. "Lives at implementai.io/dental-phone-performance, press release through the operator's PR retainer, LinkedIn amplification by Alex (Head of Growth) and Piers (Chairman), partner amplification through PE/VC operating partners, and a ranked-results page Google indexes for 'UK dental phone benchmark' searches" passes.
+The spec names where the artefact lives, how it gets seen, and which roles promote it. "We will publish on our blog" fails. "Lives at the operator's domain (e.g., operator.tld/dental-phone-performance), press release through the operator's PR retainer, LinkedIn amplification by the operator's senior brand voices (Head of Growth, Chairman, CEO as applicable), partner amplification through PE/VC operating partners, and a ranked-results page Google indexes for the relevant head terms" passes.
 
 ### 6. SEO and AEO targets are explicit
 
